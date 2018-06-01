@@ -19,7 +19,7 @@ var router = express.Router()
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.use('/',routes);
+app.use('/main',routes);
 app.use('/kara',kara);
 app.use('/ps4',ps4);
 app.use('/dvd',dvd);
@@ -69,5 +69,5 @@ app.get('/timestamp-cached', (request,response) => {
  // Create and Deploy Your First Cloud Functions
  // https://firebase.google.com/docs/functions/write-firebase-functions
 
- app.listen(3000, () => console.log('Example app listening on port 3000!'))
+ //app.listen(3000, () => console.log('Example app listening on port 3000!'))
  exports.app = functions.https.onRequest(app);

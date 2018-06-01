@@ -13,16 +13,20 @@ var db = admin.firestore();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  db.collection('Student').get()
-  .then((snapshot) => {
-      snapshot.forEach((doc) => {
-          console.log(doc.id, '=>', doc.data());
-      });
+  db.collection('test_set').doc('main').get()
+  .then(doc => {
+    if (!doc.exists) {
+        console.log('No such document!');
+      } else {
+        console.log('Document data:', doc.data());
+        res.setHeader('Content-type', 'application/json');
+        res.send(doc.data());
+      }
+      return console.log('end');
   })
     .catch((err) => {
         console.log('Error getting documents', err);
     });
-    res.send(console.log("index"));
 });
 
 module.exports = router;
