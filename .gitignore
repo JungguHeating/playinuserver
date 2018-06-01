@@ -1,7 +1,7 @@
 node_modules
 build
 npm-debug.log
-important
+function/important
 .env
 .DS_Store
-.log
+functions/.log
