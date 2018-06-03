@@ -21,12 +21,25 @@ router.get('/', function(req, res, next) {
         console.log('Document data:', doc.data());
         res.setHeader('Content-type', 'application/json');
         res.send(doc.data());
+        res.end();
       }
       return console.log('end');
   })
     .catch((err) => {
         console.log('Error getting documents', err);
     });
+});
+
+router.post('/',function(req,res,next) {
+    var data = {
+        name : '홍길동'
+    };
+    var setDoc = db.collection('test_set').doc('main').set(data)
+    .catch((err) => {
+        console.log('Error getting documents', err);
+    });
+
+    res.send("work");
 });
 
 module.exports = router;

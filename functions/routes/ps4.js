@@ -3,7 +3,7 @@ const router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.send(console.log("ps4"));
+  res.send(console.log("index"));
 });
 
 module.exports = router;

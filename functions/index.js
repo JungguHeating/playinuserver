@@ -14,6 +14,7 @@ const fire_functions = require('firebase-functions'),
 var app = express();
 var router = express.Router()
 
+
 //admin.initializeApp(fire_functions.config().firebase);
 
 app.use(bodyParser.json());
@@ -28,7 +29,7 @@ app.use('/stu_status',stu_status);
 
 
 // catch 404 and forward to error handler
-/*app.use(function(req, res, next) {
+app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
@@ -55,7 +56,7 @@ app.use(function(err, req, res, next) {
       error: {}
     });
   });
-*/
+
 //var db = admin.firestore();
 app.get('/timestamp', (request,response) => {
     response.send(`${Date.now()}`);
@@ -69,5 +70,5 @@ app.get('/timestamp-cached', (request,response) => {
  // Create and Deploy Your First Cloud Functions
  // https://firebase.google.com/docs/functions/write-firebase-functions
 
- //app.listen(3000, () => console.log('Example app listening on port 3000!'))
+ app.listen(3000, () => console.log('Example app listening on port 3000!'))
  exports.app = functions.https.onRequest(app);
