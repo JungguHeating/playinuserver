@@ -7,7 +7,7 @@ var db = admin.firestore();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    db.collection('Kara2').get()
+    db.collection('Kara2').orderBy('orderNum').get()
     .then(
         snapshot => {
         var arr = [];
@@ -44,19 +44,20 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/',function(req,res,next) {
-    var stuId = req.query.Stu_id;
-    var roomNum = req.query.room_num;
+    var inStuId = req.query.stdId.toString();
+    var inRoomNum = req.query.roomNum;
+    var inRoomTime = req.query.roomTime.toString();
 
     var updateResData = {
-        [roomNum] : stuId
+        stuId : inStuId
     }
 
-    var checkQuery = db.collection('Kara').doc('room').get()
-    .then(doc => {
-        console.log(roomNum)
+    console.log(inRoomTime);
 
-        console.log(doc.data()[roomNum]);
-        var checkAnswer = doc.data()[roomNum]
+    var checkQuery = db.collection('Kara2').doc(inRoomTime).get()
+    .then(doc => {
+        console.log(doc.data());
+        var checkAnswer = doc.data().reserved
 
         if (checkAnswer !== 1) {
             res.send(false);
@@ -64,15 +65,15 @@ router.post('/',function(req,res,next) {
         }
         else {
             var updateRoomData = {
-                [roomNum] : 0
+                reserved : 0
             };
             var updateStuResQuery = {
                 Kind_num : 1
             };
 
-            var updateQuery = db.collection('Kara').doc('room_res').update(updateResData);
-            var updateRoomState = db.collection('Kara').doc('room').update(updateRoomData);
-            var updateStuRes = db.collection('Student').doc([stuId]).update(updateStuResQuery);
+            var updateQuery = db.collection('Kara2').doc(inRoomTime).update(updateResData);
+            var updateRoomState = db.collection('Kara2').doc(inRoomTime).update(updateRoomData);
+            var updateStuRes = db.collection('Student').doc(inStuId).update(updateStuResQuery);
             res.send(true);
         }
         return;
