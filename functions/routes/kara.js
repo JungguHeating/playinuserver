@@ -5,14 +5,6 @@ const admin = require('firebase-admin');
 
 var db = admin.firestore();
 
-function wherequery() {
-
-    var karaRef = db.collection('Kara');
-    var emptyQuery = karaRef.where('room1','==','1');
-
-    return wherequery.get();
-}
-
 /* GET home page. */
 router.get('/', function(req, res, next) {
     db.collection('Kara').doc("room").get()
@@ -31,4 +23,37 @@ router.get('/', function(req, res, next) {
             console.log('Error getting documents', err);
         });
 });
+
+router.post('/',function(req,res,next) {
+    var stuId = req.query.Stu_id;
+    var roomNum = req.query.room_num;
+
+    var updateResData = {
+        [roomNum] : stuId
+    }
+
+    var checkQuery = db.collection('Kara').doc('room').get()
+    .then(doc => {
+        console.log(roomNum)
+
+        console.log(doc.data()[roomNum]);
+        var checkAnswer = doc.data()[roomNum]
+
+        if (checkAnswer !== 1) {
+            res.send(false);
+
+        }
+        else {
+            var updateRoomData = {
+                [roomNum] : 0
+            }
+            var updateQuery = db.collection('Kara').doc('room_res').update(updateResData);
+            var updateRoomState = db.collection('Kara').doc('room').update(updateRoomData);
+            res.send(true);
+        }
+        return;
+    })
+    
+    //var updataQuery = db.collection('Kara').doc('room_res').update(updateData);
+})
 module.exports = router;
