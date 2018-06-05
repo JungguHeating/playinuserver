@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const admin = require('firebase-admin');
 
-
 var db = admin.firestore();
 
 /* GET home page. */
@@ -69,7 +68,8 @@ router.post('/',function(req,res,next) {
             };
             var updateStuResQuery = {
                 Kind_num : 1,
-                resTime : resRoomTime
+                resTime : resRoomTime,
+                roomTime : inRoomTime
             };
 
             var updateQuery = db.collection('Kara2').doc(inRoomTime).update(updateResData);
