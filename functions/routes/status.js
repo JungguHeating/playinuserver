@@ -23,4 +23,28 @@ router.get('/', function(req, res, next) {
     });
 });
 
+
+router.post('/', function(req,res,next){
+
+    var inStuId = req.query.stdId.toString();
+    var inRoomTime = req.query.roomTime.toString();
+
+    var deleteStuQuery = {
+        Kind_num : 0,
+        resTime : 0
+    }
+
+    var deleteResQuery = {
+        reserved :1,
+        stuId : ""
+    }
+    console.log(inStuId);
+    console.log(inRoomTime);
+
+    
+    db.collection('Student').doc(inStuId).update(deleteStuQuery);
+    db.collection('Kara2').doc(inRoomTime).update(deleteResQuery);
+
+})
+
 module.exports = router;

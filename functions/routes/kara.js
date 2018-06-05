@@ -47,16 +47,16 @@ router.post('/',function(req,res,next) {
     var inStuId = req.query.stdId.toString();
     var inRoomNum = req.query.roomNum;
     var inRoomTime = req.query.roomTime.toString();
+    var resRoomTime = req.query.resTime.toString();
 
     var updateResData = {
         stuId : inStuId
     }
 
-    console.log(inRoomTime);
+
 
     var checkQuery = db.collection('Kara2').doc(inRoomTime).get()
     .then(doc => {
-        console.log(doc.data());
         var checkAnswer = doc.data().reserved
 
         if (checkAnswer !== 1) {
@@ -68,7 +68,8 @@ router.post('/',function(req,res,next) {
                 reserved : 0
             };
             var updateStuResQuery = {
-                Kind_num : 1
+                Kind_num : 1,
+                resTime : resRoomTime
             };
 
             var updateQuery = db.collection('Kara2').doc(inRoomTime).update(updateResData);
