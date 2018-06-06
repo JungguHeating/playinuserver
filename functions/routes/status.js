@@ -27,9 +27,8 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req,res,next){
 
     var inStuId = req.query.stdId.toString();
-    var inRoomTime = req.query.roomTime.toString();
+    var inRoomTime;
     var inKindNum = req.query.kindNum;
-
     var deleteStuQuery = {
         Kind_num : 0,
         resTime : "",
@@ -40,8 +39,33 @@ router.post('/', function(req,res,next){
         reserved : 1,
         stuId : ""
     }
-    console.log(inStuId);
+    
+    db.collection('Student').doc(inStuId).get()
+    .then(doc => {
+        if(!doc.exists) {
+            res.send(false);
+        } else {
+            inRoomTime = doc.data().roomTime;
+            if(inKindNum == 1) {
+                db.collection('Student').doc(inStuId).update(deleteStuQuery);
+                db.collection('Kara2').doc(inRoomTime).update(deleteResQuery);
+                console.log("sing work");
+            }else if(inKindNum == 2) {
+                db.collection('Student').doc(inStuId).update(deleteStuQuery);
+                db.collection('Ps4').doc(inRoomTime).update(deleteResQuery);
+                console.log("ps4 work");
+            }else return false;
+        }
+        return true;
+    })
+    .catch((err) => {
+        console.log('Error getting documents' , err);
+    });
+
+/*
     console.log(inRoomTime);
+
+    
 
     if(inKindNum == 1) {
         db.collection('Student').doc(inStuId).update(deleteStuQuery);
@@ -52,7 +76,7 @@ router.post('/', function(req,res,next){
         db.collection('Ps4').doc(inRoomTime).update(deleteResQuery);
         console.log("ps4 work");
     }else return false;
-
+*/
 })
 
 module.exports = router;
