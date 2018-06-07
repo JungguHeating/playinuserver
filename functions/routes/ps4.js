@@ -6,19 +6,22 @@ var db = admin.firestore();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+    var serTime = new Date().getTime();
     db.collection('Ps4').orderBy('orderNum').get()
     .then(
         snapshot => {
         var arr = [];
-
+        var startTime = new Date().getTime();
         snapshot.forEach(doc => {
             arr.push(doc.data());
           
         })
-        console.log(arr);
         res.setHeader('Content-type', 'application/json');
         res.send(arr);
         res.end();
+        var endTime = new Date().getTime();
+        console.log(endTime - serTime);
+        console.log(endTime - startTime);
         return ;
       })
       .catch(err => {

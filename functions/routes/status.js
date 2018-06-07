@@ -49,14 +49,18 @@ router.post('/', function(req,res,next){
             if(inKindNum == 1) {
                 db.collection('Student').doc(inStuId).update(deleteStuQuery);
                 db.collection('Kara2').doc(inRoomTime).update(deleteResQuery);
+                var unsub = db.collection('Kara').onSnapshot(()=>{});
+                unsub();
                 console.log("sing work");
             }else if(inKindNum == 2) {
                 db.collection('Student').doc(inStuId).update(deleteStuQuery);
                 db.collection('Ps4').doc(inRoomTime).update(deleteResQuery);
+                var unsub2 = db.collection('Ps4').onSnapshot(()=>{});
+                unsub2();
                 console.log("ps4 work");
             }else return false;
         }
-        return true;
+        return ;
     })
     .catch((err) => {
         console.log('Error getting documents' , err);
@@ -64,9 +68,6 @@ router.post('/', function(req,res,next){
 
 /*
     console.log(inRoomTime);
-
-    
-
     if(inKindNum == 1) {
         db.collection('Student').doc(inStuId).update(deleteStuQuery);
         db.collection('Kara2').doc(inRoomTime).update(deleteResQuery);

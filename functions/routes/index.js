@@ -5,8 +5,7 @@ const admin = require('firebase-admin');
 var serviceAccount = require('../important/playground-dac96ced6142.json');
 
 admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://playground-e61bc.firebaseio.com"
+    credential: admin.credential.cert(serviceAccount)
 });
 
 var db = admin.firestore();
@@ -23,11 +22,12 @@ router.get('/', function(req, res, next) {
         res.send(doc.data());
         res.end();
       }
-      return console.log('end');
+      return ;
   })
     .catch((err) => {
         console.log('Error getting documents', err);
     });
+    return ;
 });
 
 router.post('/',function(req,res,next) {
