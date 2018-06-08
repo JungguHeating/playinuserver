@@ -9,7 +9,11 @@ const fire_functions = require('firebase-functions'),
       ps4 = require('./routes/ps4'),
       dvd = require('./routes/dvd'),
       rent = require('./routes/rent'),
-      stu_status = require('./routes/status');
+      stu_status = require('./routes/status'),
+      coopBoard = require('./routes/coopBoard'),
+      calendar = require('./routes/calendar'),
+      labStatus = require('./routes/labStatus'),
+      questionBoard = require('./routes/questionBoard');
 
 var app = express();
 var router = express.Router()
@@ -26,6 +30,10 @@ app.use('/ps4',ps4);
 app.use('/dvd',dvd);
 app.use('/rent',rent);
 app.use('/stu_status',stu_status);
+app.use('/coopBoard',coopBoard);
+app.use('/calendar',calendar);
+app.use('/labStatus',labStatus);
+app.use('/questionBoard',questionBoard);
 
 
 // catch 404 and forward to error handler
